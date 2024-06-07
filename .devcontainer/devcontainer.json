@@ -1,0 +1,46 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+    "context": "../",
+	"build": {
+		"args": {
+			"WORKSPACE": "${containerWorkspaceFolder}"
+		}
+	},
+    "dockerFile": "Dockerfile",
+    // This will launch the container as a non-root user
+    "remoteUser" : "cleverrover-humble",
+    "runArgs": [
+        // This will allow you to use a ptrace-based debugger like C++, Go, and Rust.
+        "--cap-add=SYS_PTRACE",
+        "--security-opt", "seccomp=unconfined",
+        "--network=host",
+        "--ipc=host",
+        "--volume=/tmp/.X11-unix:/tmp/.X11-unix:rw",
+		"--name=cleverrover-humble"
+    ],
+	"containerEnv": {
+		"QT_X11_NO_MITSHM": "1",
+		"DISPLAY": "${localEnv:DISPLAY}", // Needed for GUI try ":0" for windows
+		"WAYLAND_DISPLAY": "${localEnv:WAYLAND_DISPLAY}",
+		"XDG_RUNTIME_DIR": "${localEnv:XDG_RUNTIME_DIR}",
+		"PULSE_SERVER": "${localEnv:PULSE_SERVER}",
+		"LIBGL_ALWAYS_SOFTWARE": "1" // Needed for software rendering of opengl
+	},
+    // Set *default* container specific settings.json values on container create.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-azuretools.vscode-docker",
+				"ms-iot.vscode-ros",
+				"ms-python.python",
+				"ms-vscode.cpptools",
+				"ms-vscode.cmake-tools",
+				"redhat.vscode-yaml",
+				"smilerobotics.urdf",
+				"streetsidesoftware.code-spell-checker",
+				"twxs.cmake",
+				"yzhang.markdown-all-in-one",
+			]
+		}
+	}
+}
